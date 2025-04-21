@@ -35,17 +35,42 @@ CREATE TABLE Team (
     FOREIGN KEY (Year) REFERENCES Season (Year)
 );
 
+-- CREATE TABLE Driver (
+--     Driver_ID int PRIMARY KEY,
+--     Nationality varchar(255),
+--     Last_Name varchar(255),
+--     First_Name varchar(255),
+--     Total_Ind_Score int,
+--     Year int,
+--     Team_Name varchar(255),
+--     FOREIGN KEY (Year) REFERENCES Season (Year),
+--     FOREIGN KEY (Team_Name, Year) REFERENCES Team (Team_Name, Year)
+-- );
+
 CREATE TABLE Driver (
-    Driver_ID int PRIMARY KEY,
-    Nationality varchar(255),
-    Last_Name varchar(255),
-    First_Name varchar(255),
-    Total_Ind_Score int,
-    Year int,
-    Team_Name varchar(255),
-    FOREIGN KEY (Year) REFERENCES Season (Year),
-    FOREIGN KEY (Team_Name, Year) REFERENCES Team (Team_Name, Year)
+  Driver_ID        NUMBER        NOT NULL,
+  Nationality      VARCHAR2(255),
+  Last_Name        VARCHAR2(255),
+  First_Name       VARCHAR2(255),
+  Total_Ind_Score  NUMBER,
+  Year             NUMBER        NOT NULL,
+  Team_Name        VARCHAR2(255),
+  PRIMARY KEY (Driver_ID, Year),
+  FOREIGN KEY (Year)               REFERENCES Season (Year),
+  FOREIGN KEY (Team_Name, Year)    REFERENCES Team   (Team_Name, Year)
 );
+
+-- CREATE TABLE Driver (
+--   Driver_ID       NUMBER        NOT NULL,
+--   Nationality     VARCHAR2(50),
+--   Last_Name       VARCHAR2(100),
+--   First_Name      VARCHAR2(100),
+--   Total_Ind_Score NUMBER,
+--   Year            NUMBER        NOT NULL,
+--   Team_Name       VARCHAR2(100),
+--   CONSTRAINT pk_driver_season PRIMARY KEY (Driver_ID, Year)
+-- );
+
 
 CREATE TABLE Race (
     Race_Name varchar(255) PRIMARY KEY,
@@ -59,17 +84,33 @@ CREATE TABLE Race (
     FOREIGN KEY (Country, State) REFERENCES Location (Country, State)
 );
 
+-- CREATE TABLE Result (
+--     Result_ID varchar(255) PRIMARY KEY,
+--     Position int NOT NULL,
+--     Points int,a
+--     Driver_ID int,
+--     Team_Name varchar(255),
+--     Year int,
+--     FOREIGN KEY (Year) REFERENCES Season (Year),
+--     FOREIGN KEY (Driver_ID) REFERENCES Driver (Driver_ID),
+--     FOREIGN KEY (Team_Name, Year) REFERENCES Team (Team_Name, Year)
+-- );
+
 CREATE TABLE Result (
-    Result_ID varchar(255) PRIMARY KEY,
-    Position int NOT NULL,
-    Points int,
-    Driver_ID int,
-    Team_Name varchar(255),
-    Year int,
-    FOREIGN KEY (Year) REFERENCES Season (Year),
-    FOREIGN KEY (Driver_ID) REFERENCES Driver (Driver_ID),
-    FOREIGN KEY (Team_Name, Year) REFERENCES Team (Team_Name, Year)
+  Result_ID   VARCHAR2(255) PRIMARY KEY,
+  Position    NUMBER        NOT NULL,
+  Points      NUMBER,
+  Driver_ID   NUMBER        NOT NULL,
+  Team_Name   VARCHAR2(255),
+  Year        NUMBER        NOT NULL,
+  FOREIGN KEY (Year)
+    REFERENCES Season (Year),
+  FOREIGN KEY (Driver_ID, Year)
+    REFERENCES Driver (Driver_ID, Year),
+  FOREIGN KEY (Team_Name, Year)
+    REFERENCES Team   (Team_Name, Year)
 );
+
 
 CREATE TABLE RaceSession (
     Duration int,
